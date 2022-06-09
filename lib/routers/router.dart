@@ -4,6 +4,7 @@ import 'package:flutter_shop/pages/Search.dart';
 import 'package:flutter_shop/pages/tabs/Tabs.dart';
 
 import '../pages/SearchPage2.dart';
+import '../pages/ProductContent.dart';
 
 /// 路由设置onGenerateRoute
 final routes = {
@@ -12,6 +13,8 @@ final routes = {
   '/search': (context) => SearchPage(),
   // 有参数
   '/search2': (context, {arguments}) => SearchPage2(arguments: arguments),
+  '/productContent': (context, {arguments}) => ProductContentPage(arguments: arguments)
+
 };
 
 //固定写法

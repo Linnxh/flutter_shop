@@ -2,10 +2,10 @@ import 'package:event_bus/event_bus.dart';
 
 EventBus eventBus = EventBus();
 
-class productContentEvent {
+class ProductContentEvent {
   String? str;
 
-  productContentEvent(String? str) {
+  ProductContentEvent(String? str) {
     this.str = str;
   }
 }

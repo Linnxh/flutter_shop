@@ -120,34 +120,39 @@ class _HomePageState extends State<HomePage> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (contxt, index) {
-          return Container(
-            // padding: EdgeInsets.all(20),
-            child: Column(
-              /// 嵌套Column，将布局位置居于组件的中间
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: (100),
-                  width: (100),
-                  margin: EdgeInsets.only(right: (10)),
-                  child: Image.network(
-                      "https://www.itying.com/images/flutter/hot${index + 1}.jpg",
-                      fit: BoxFit.cover),
-                ),
-                Container(
-                  color: Colors.greenAccent,
-                  height: (30),
-                  // child: Text("第${index}条"),
-                  /// 嵌套Column，将布局位置居于组件的底部
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("第${index}条"),
-                    ],
+          return InkWell(
+            onTap: () {
+              // Navigator.pushNamed(contxt, 'productContent',arguments: {"id":})
+            },
+            child: Container(
+              // padding: EdgeInsets.all(20),
+              child: Column(
+                /// 嵌套Column，将布局位置居于组件的中间
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: (100),
+                    width: (100),
+                    margin: EdgeInsets.only(right: (10)),
+                    child: Image.network(
+                        "https://www.itying.com/images/flutter/hot${index + 1}.jpg",
+                        fit: BoxFit.cover),
                   ),
-                )
-              ],
+                  Container(
+                    color: Colors.greenAccent,
+                    height: (30),
+                    // child: Text("第${index}条"),
+                    /// 嵌套Column，将布局位置居于组件的底部
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text("第${index}条"),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },
@@ -273,75 +278,81 @@ class _HomePageState extends State<HomePage> {
             String sPic = value.sPic;
             sPic = Config.domain + sPic.replaceAll('\\', '/');
 
-            return Container(
-              padding: EdgeInsets.all(5),
-              width: itemWidth,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black12, width: 1)),
-              child: Column(
-                children: [
-                  Container(
-                      child: AspectRatio(
-                    // 防止服务器返回的高度不一样，
-                    aspectRatio: 1 / 1,
-                    child: Image.network(
-                      sPic,
-                      fit: BoxFit.cover,
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/productContent',
+                    arguments: {"id": value.sId});
+              },
+              child: Container(
+                padding: EdgeInsets.all(5),
+                width: itemWidth,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black12, width: 1)),
+                child: Column(
+                  children: [
+                    Container(
+                        child: AspectRatio(
+                      // 防止服务器返回的高度不一样，
+                      aspectRatio: 1 / 1,
+                      child: Image.network(
+                        sPic,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                        "${value.title}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      "${value.title}",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "￥${value.price}",
-                          style: TextStyle(color: Colors.redAccent),
-                        ),
-                        Text(
-                          "￥${value.oldPrice}",
-                          style: TextStyle(
-                              color: Colors.black87,
-                              decoration: TextDecoration.lineThrough),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-
-                    /// stack + align/positioned 实现页面的定位布局
-                    /// stack 里的 alignment 参考值：topLeft (-1,-1)右上角，针对组内所有组件，无法单独对子view进行调整
-                    /// align 控制的是组件在父组件的位置 可以Alignment.topLeft 也可以使用坐标Alignment(0,0)。
-                    /// positioned 同上，top:子元素距离顶部的距离（10）， bottom:子元素距离底部的距离
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "￥12.29",
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "￥${value.price}",
                             style: TextStyle(color: Colors.redAccent),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            "￥12.29",
-                            style: TextStyle(color: Colors.black87),
-                          ),
-                        ),
-                      ],
+                          Text(
+                            "￥${value.oldPrice}",
+                            style: TextStyle(
+                                color: Colors.black87,
+                                decoration: TextDecoration.lineThrough),
+                          )
+                        ],
+                      ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+
+                      /// stack + align/positioned 实现页面的定位布局
+                      /// stack 里的 alignment 参考值：topLeft (-1,-1)右上角，针对组内所有组件，无法单独对子view进行调整
+                      /// align 控制的是组件在父组件的位置 可以Alignment.topLeft 也可以使用坐标Alignment(0,0)。
+                      /// positioned 同上，top:子元素距离顶部的距离（10）， bottom:子元素距离底部的距离
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "￥12.29",
+                              style: TextStyle(color: Colors.redAccent),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "￥12.29",
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           }).toList(),
@@ -351,7 +362,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("home")),
+      appBar: AppBar(
+        title: Text("home"),
+        backgroundColor: Colors.pinkAccent,
+      ),
       body: ListView(
         children: <Widget>[
           _swiperWidget(),
