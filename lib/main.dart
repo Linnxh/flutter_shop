@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_shop/pages/provider/CartProvider.dart';
 import 'package:flutter_shop/pages/provider/Counter.dart';
 
 import 'package:flutter_shop/routers/router.dart';
@@ -26,7 +27,17 @@ class _MyAppState extends State<MyApp> {
             providers: [
               ChangeNotifierProvider(create: (BuildContext context) {
                 Counter();
-              })
+              }),
+              /// 这个写法报错，具体原因是？
+              // ChangeNotifierProvider(create: (BuildContext context) {
+              //   CartProvider();
+              // }),
+              /// 需要指定泛型CartProvider，否则报错
+              ChangeNotifierProvider<CartProvider>(
+                  create: (BuildContext context) {
+                return CartProvider();
+              }),
+              ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

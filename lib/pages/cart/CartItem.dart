@@ -1,69 +1,81 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/pages/cart/CartNum.dart';
+import 'package:flutter_shop/pages/services/ScreenAdaper.dart';
+
+import '../../model/ProductContentModel.dart';
 
 class CartItem extends StatefulWidget {
-  const CartItem({Key? key}) : super(key: key);
+  Map _itemData;
+  CartItem(this._itemData,{Key? key}) : super(key: key);
 
-  @override
   _CartItemState createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
+  late Map _itemData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this._itemData=widget._itemData;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
-        decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(width: 1, color: Colors.black12))),
-        child: Row(
-          children: <Widget>[
-            Container(
-              width: 60,
-              child: Checkbox(
-                value: true,
-                onChanged: (val) {},
-                activeColor: Colors.pink,
-              ),
+      height: ScreenAdaper.height(200),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: ScreenAdaper.width(60),
+            child: Checkbox(
+              value: true,
+              onChanged: (val) {},
+              activeColor: Colors.pink,
             ),
-            Container(
-              width: 120,
-              child: Image.network(
-                  "https://www.itying.com/images/flutter/hot1.jpg",
-                  fit: BoxFit.fill),
-            ),
-            Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          Container(
+            width: ScreenAdaper.width(160),
+            child: Image.network(
+                "${_itemData["pic"]}",
+                fit: BoxFit.cover),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("${_itemData["title"]}",
+                      maxLines: 2),
+                  Text("${_itemData["selectedAttr"]}",
+                      maxLines: 2),
+                  Stack(
                     children: <Widget>[
-                      Text(
-                        "titlddddddddddddde1",
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("￥${_itemData["price"]}",style: TextStyle(
+                            color: Colors.red
+                        )),
                       ),
-                      Stack(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "12",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: CartNum(),
-                          )
-                        ],
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: CartNum(_itemData),
                       )
                     ],
-                  ),
-                ))
-          ],
-        ));
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
+

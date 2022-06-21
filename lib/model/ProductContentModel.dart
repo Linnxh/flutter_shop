@@ -8,6 +8,7 @@ class ProductContentModel {
   ProductContentModel.fromJson(Map<String, dynamic> json) {
     result = ProductContentitem.fromJson(json['result']);
   }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['result'] = result.toJson();
@@ -32,6 +33,8 @@ class ProductContentitem {
   String? cname;
   int? salecount;
   String? subTitle;
+  int? count;
+  String? selectedAttr;
 
   ProductContentitem({
     this.sId,
@@ -68,7 +71,11 @@ class ProductContentitem {
     cname = json['cname'];
     salecount = json['salecount'];
     subTitle = json['sub_title'];
+    // 新增
+    count = 1;
+    selectedAttr = '';
   }
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['_id'] = sId;
@@ -93,7 +100,7 @@ class ProductContentitem {
 class Attr {
   late String cate;
   late List<String> list;
-  List<Map> attrList=[];   //自定义的attrList  
+  List<Map> attrList = []; //自定义的attrList
   Attr({
     required this.cate,
     required this.list,
@@ -101,7 +108,7 @@ class Attr {
 
   Attr.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];
-    list = List<String>.from(json['list']);    
+    list = List<String>.from(json['list']);
   }
 
   Map<String, dynamic> toJson() {

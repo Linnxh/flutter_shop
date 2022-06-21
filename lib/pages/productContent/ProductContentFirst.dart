@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/pages/cart/CartNum.dart';
+import 'package:flutter_shop/pages/productContent/CartNumProduct.dart';
+import 'package:flutter_shop/pages/provider/CartProvider.dart';
+import 'package:flutter_shop/pages/services/CartServices.dart';
 import 'package:flutter_shop/pages/services/EventBus.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/Config.dart';
 import '../../model/ProductContentModel.dart';
@@ -26,6 +31,7 @@ class _ProductContentFirstState extends State<ProductContentFirst>
   bool get wantKeepAlive => true;
 
   var actionEventBus;
+  var cartProvider;
 
   @override
   void initState() {
@@ -33,7 +39,6 @@ class _ProductContentFirstState extends State<ProductContentFirst>
     this._productContent = widget._productContentList[0];
 
     this._attr = this._productContent.attr;
-
     _initAttr();
     // 监听广播
     actionEventBus = eventBus.on<ProductContentEvent>().listen((event) {
@@ -96,6 +101,7 @@ class _ProductContentFirstState extends State<ProductContentFirst>
     // print(tempArr.join(','));
     setState(() {
       this._selectedValue = tempArr.join(',');
+      _productContent.selectedAttr = _selectedValue;
     });
   }
 
@@ -155,6 +161,7 @@ class _ProductContentFirstState extends State<ProductContentFirst>
           return StatefulBuilder(
             builder: (BuildContext context, setBottomState) {
               return Stack(
+                alignment: Alignment.topLeft,
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(ScreenAdaper.width(20)),
@@ -162,10 +169,25 @@ class _ProductContentFirstState extends State<ProductContentFirst>
                       children: <Widget>[
                         Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: _getAttrWidget(setBottomState))
+                            children: _getAttrWidget(setBottomState)),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            children: [
+                              Text("数量"),
+                              CartNumProduct(this._productContent)
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
+                  // Container(
+                  //   padding: EdgeInsets.all(10),
+                  //   child: Row(
+                  //     children: [Text("数量"), CartNum()],
+                  //   ),
+                  // ),
                   Positioned(
                     bottom: 0,
                     width: ScreenAdaper.width(750),
@@ -179,8 +201,14 @@ class _ProductContentFirstState extends State<ProductContentFirst>
                             child: JdButton(
                               color: Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
-                              cb: () {
+                              cb: () async {
                                 print('加入购物车');
+                                await CartServices.addCart(
+                                    this._productContent);
+                                // 关闭底部筛选属性
+                                Navigator.of(context).pop();
+                                // 更新
+                                cartProvider.updateCartList();
                               },
                             ),
                           ),
@@ -212,7 +240,7 @@ class _ProductContentFirstState extends State<ProductContentFirst>
     //处理图片
     String pic = Config.domain + this._productContent.pic;
     pic = pic.replaceAll('\\', '/');
-
+    cartProvider = Provider.of<CartProvider>(context);
     return Container(
       padding: EdgeInsets.all(10),
       child: ListView(

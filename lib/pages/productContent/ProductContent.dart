@@ -4,14 +4,18 @@ import 'package:flutter_shop/pages/services/EventBus.dart';
 import 'package:flutter_shop/pages/services/ScreenAdaper.dart';
 import 'package:flutter_shop/pages/widget/JdButton.dart';
 import 'package:flutter_shop/pages/widget/LoadingWidget.dart';
+import 'package:provider/provider.dart';
 
-import '../model/ProductContentModel.dart';
-import 'ProductContent/ProductContentFirst.dart';
-import 'ProductContent/ProductContentSecond.dart';
-import 'ProductContent/ProductContentThird.dart';
+import '../../model/ProductContentModel.dart';
+import '../ProductContent/ProductContentFirst.dart';
+import '../ProductContent/ProductContentSecond.dart';
+import '../ProductContent/ProductContentThird.dart';
 
-import '../config/Config.dart';
+import '../../config/Config.dart';
 import 'package:dio/dio.dart';
+
+import '../provider/CartProvider.dart';
+import '../services/CartServices.dart';
 
 class ProductContentPage extends StatefulWidget {
   final Map arguments;
@@ -23,14 +27,11 @@ class ProductContentPage extends StatefulWidget {
 
 class _ProductContentPageState extends State<ProductContentPage> {
   List _productContentList = [];
-
+  var cartProvider;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // print(this._productContentData.sId);
-
-    this._getContentData();
+    _getContentData();
   }
 
   _getContentData() async {
@@ -44,12 +45,15 @@ class _ProductContentPageState extends State<ProductContentPage> {
     // print(productContent.result.title);
 
     setState(() {
+      print("商品详情返回的数据" + productContent.result.toString());
       this._productContentList.add(productContent.result);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    cartProvider = Provider.of<CartProvider>(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -144,14 +148,18 @@ class _ProductContentPageState extends State<ProductContentPage> {
                             child: JdButton(
                               color: Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
-                              cb: () {
-                                if (this._productContentList[0].attr.length >
+                              cb: () async {
+                                if (_productContentList[0].attr.length >
                                     0) {
                                   print('=======发送广播');
                                   print('加入购物车');
+                                  // 显示多规格的弹窗
                                   eventBus.fire(ProductContentEvent('加入购物车'));
                                 } else {
                                   print('没有规格，直接加入购物车');
+                                  await CartServices.addCart(_productContentList[0]);
+                                  // 更新
+                                  cartProvider.updateCartList();
                                 }
                               },
                             ),

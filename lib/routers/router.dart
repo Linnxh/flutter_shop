@@ -4,7 +4,7 @@ import 'package:flutter_shop/pages/Search.dart';
 import 'package:flutter_shop/pages/tabs/Tabs.dart';
 
 import '../pages/SearchPage2.dart';
-import '../pages/ProductContent.dart';
+import '../pages/productContent/ProductContent.dart';
 
 /// 路由设置onGenerateRoute
 final routes = {
