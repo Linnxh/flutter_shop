@@ -5,6 +5,7 @@ import 'package:flutter_shop/pages/productContent/CartNumProduct.dart';
 import 'package:flutter_shop/pages/provider/CartProvider.dart';
 import 'package:flutter_shop/pages/services/CartServices.dart';
 import 'package:flutter_shop/pages/services/EventBus.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/Config.dart';
@@ -203,12 +204,15 @@ class _ProductContentFirstState extends State<ProductContentFirst>
                               text: "加入购物车",
                               cb: () async {
                                 print('加入购物车');
-                                await CartServices.addCart(
-                                    this._productContent);
+                                await CartServices.addCart(_productContent);
                                 // 关闭底部筛选属性
                                 Navigator.of(context).pop();
                                 // 更新
                                 cartProvider.updateCartList();
+                                Fluttertoast.showToast(
+                                    msg: "success",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM);
                               },
                             ),
                           ),

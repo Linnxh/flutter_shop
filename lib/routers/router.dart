@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/pages/Search.dart';
+import 'package:flutter_shop/pages/tabs/Cart.dart';
 import 'package:flutter_shop/pages/tabs/Tabs.dart';
 
 import '../pages/SearchPage2.dart';
@@ -11,10 +12,11 @@ final routes = {
   '/': (context) => Tabs(),
   // 无参数
   '/search': (context) => SearchPage(),
+  '/cart': (context) => CartPage(),
   // 有参数
   '/search2': (context, {arguments}) => SearchPage2(arguments: arguments),
-  '/productContent': (context, {arguments}) => ProductContentPage(arguments: arguments)
-
+  '/productContent': (context, {arguments}) =>
+      ProductContentPage(arguments: arguments)
 };
 
 //固定写法

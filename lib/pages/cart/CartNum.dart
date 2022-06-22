@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/CartProvider.dart';
 
 class CartNum extends StatefulWidget {
   final Map _itemData;
@@ -12,15 +15,18 @@ class CartNum extends StatefulWidget {
 
 class _CartNumState extends State<CartNum> {
   late Map _itemData;
+  late CartProvider cartProvider;
 
   @override
   void initState() {
     super.initState();
-    _itemData = widget._itemData;
+
   }
 
   @override
   Widget build(BuildContext context) {
+    _itemData = widget._itemData;
+    cartProvider = Provider.of<CartProvider>(context);
     return Container(
       width: 82,
       decoration:
@@ -33,7 +39,14 @@ class _CartNumState extends State<CartNum> {
 
   Widget _leftBtn() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        /// 注意此处该值对应的是，调用cartNum的CartItem的_itemData 的值，对应列表页的值也会相应的变化，===>lib/pages/tabs/Cart.dart:34,会同步到carProvider里的数据中，
+        /// 此时需要将变化以后的值，存到本地存储中
+        if (_itemData["count"] > 1) {
+          _itemData["count"]--;
+          cartProvider.itemCountChange();
+        }
+      },
       child: Container(
         alignment: Alignment.center,
         width: 20,
@@ -45,7 +58,10 @@ class _CartNumState extends State<CartNum> {
 
   Widget _rightBtn() {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        _itemData["count"]++;
+        cartProvider.itemCountChange();
+      },
       child: Container(
         alignment: Alignment.center,
         width: 20,

@@ -13,76 +13,117 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  var isEdit = false;
+
   @override
   Widget build(BuildContext context) {
+    print("===");
     var cartProvider = Provider.of<CartProvider>(context);
-
     return Scaffold(
         appBar: AppBar(
           title: Text("cart"),
           actions: <Widget>[
-            IconButton(onPressed: null, icon: Icon(Icons.launch))
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    isEdit = !isEdit;
+                  });
+                },
+                icon: Icon(Icons.launch))
           ],
         ),
         body: cartProvider.cartList.length > 0
             ? Stack(
-                children: <Widget>[
-                  ListView(
+          children: <Widget>[
+            ListView(
+              children: [
+                Column(
+                  children: cartProvider.cartList.map((value) {
+                    return CartItem(value);
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: 60,
+                )
+              ],
+            ),
+            Positioned(
+                bottom: 0,
+                width: ScreenAdaper.getScreenWidth(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(width: 1, color: Colors.black12)),
+                    color: Colors.white, // 有边框的清苦啊下，颜色不能写在外层容器
+                  ),
+                  height: 50.0,
+                  child: Stack(
                     children: [
-                      Column(
-                        children: cartProvider.cartList.map((value) {
-                          return CartItem(value);
-                        }).toList(),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: cartProvider.isCheckedAll,
+                              onChanged: (val) {
+                                cartProvider.checkAll(val);
+                              },
+                              activeColor: Colors.pink,
+                            ),
+                            Text("checkAll",
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 17)),
+                            SizedBox(width: 5),
+                            isEdit == false ? Text("sumPrice") : Text(""),
+                            SizedBox(width: 5),
+                            isEdit == false
+                                ? Text(
+                              "${cartProvider.allPrice}",
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 17),
+                            )
+                                : Text(""),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 60,
+                      isEdit == false
+                          ? Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                            width: 100,
+                            height: 50,
+                            alignment: Alignment.center,
+                            color: Colors.redAccent,
+                            child: Text(
+                              "submit",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      )
+                          : Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell( /// container text 可以设置inkwell设置监听事件
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            alignment: Alignment.center,
+                            color: Colors.redAccent,
+                            child: Text(
+                              "del",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          onTap: () {
+                            cartProvider.removeItem();
+                          },
+                        ),
                       )
                     ],
                   ),
-                  Positioned(
-                      bottom: 0,
-                      width: ScreenAdaper.getScreenWidth(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                              top: BorderSide(width: 1, color: Colors.black12)),
-                          color: Colors.white, // 有边框的清苦啊下，颜色不能写在外层容器
-                        ),
-                        height: 50.0,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: true,
-                                    onChanged: (val) {},
-                                    activeColor: Colors.pink,
-                                  ),
-                                  Text("check all")
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                  width: 100,
-                                  height: 50,
-                                  alignment: Alignment.center,
-                                  color: Colors.redAccent,
-                                  child: Text(
-                                    "submit",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                            )
-                          ],
-                        ),
-                      ))
-                ],
-              )
+                ))
+          ],
+        )
             : Center(
-                child: Text("no data in cate"),
-              ));
+          child: Text("no data in cate"),
+        ));
   }
 }

@@ -28,6 +28,7 @@ class ProductContentPage extends StatefulWidget {
 class _ProductContentPageState extends State<ProductContentPage> {
   List _productContentList = [];
   var cartProvider;
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +53,6 @@ class _ProductContentPageState extends State<ProductContentPage> {
 
   @override
   Widget build(BuildContext context) {
-
     cartProvider = Provider.of<CartProvider>(context);
     return DefaultTabController(
       length: 3,
@@ -109,6 +109,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
             ? Stack(
                 children: <Widget>[
                   TabBarView(
+                    physics: NeverScrollableScrollPhysics(), // 禁止左右滚动
                     children: <Widget>[
                       ProductContentFirst(this._productContentList),
                       ProductContentSecond(this._productContentList),
@@ -126,21 +127,26 @@ class _ProductContentPageState extends State<ProductContentPage> {
                           color: Colors.white),
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            padding:
-                                EdgeInsets.only(top: ScreenAdaper.height(10)),
-                            width: 100,
-                            height: ScreenAdaper.height(88),
-                            child: Column(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.shopping_cart,
-                                  size: ScreenAdaper.size(36),
-                                ),
-                                Text("购物车",
-                                    style: TextStyle(
-                                        fontSize: ScreenAdaper.size(24)))
-                              ],
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, "/cart");
+                            },
+                            child: Container(
+                              padding:
+                                  EdgeInsets.only(top: ScreenAdaper.height(10)),
+                              width: 100,
+                              height: ScreenAdaper.height(88),
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.shopping_cart,
+                                    size: ScreenAdaper.size(36),
+                                  ),
+                                  Text("购物车",
+                                      style: TextStyle(
+                                          fontSize: ScreenAdaper.size(24)))
+                                ],
+                              ),
                             ),
                           ),
                           Expanded(
@@ -149,15 +155,15 @@ class _ProductContentPageState extends State<ProductContentPage> {
                               color: Color.fromRGBO(253, 1, 0, 0.9),
                               text: "加入购物车",
                               cb: () async {
-                                if (_productContentList[0].attr.length >
-                                    0) {
+                                if (_productContentList[0].attr.length > 0) {
                                   print('=======发送广播');
                                   print('加入购物车');
                                   // 显示多规格的弹窗
                                   eventBus.fire(ProductContentEvent('加入购物车'));
                                 } else {
                                   print('没有规格，直接加入购物车');
-                                  await CartServices.addCart(_productContentList[0]);
+                                  await CartServices.addCart(
+                                      _productContentList[0]);
                                   // 更新
                                   cartProvider.updateCartList();
                                 }
