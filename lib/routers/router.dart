@@ -6,6 +6,9 @@ import 'package:flutter_shop/pages/tabs/Tabs.dart';
 
 import '../pages/SearchPage2.dart';
 import '../pages/productContent/ProductContent.dart';
+import '../pages/test/CustomViewRotated.dart';
+import '../pages/test/custompaint/CustomPaintRoute.dart';
+import '../pages/test/renderObject/CustomCheckboxTest.dart';
 
 /// 路由设置onGenerateRoute
 final routes = {
@@ -16,7 +19,13 @@ final routes = {
   // 有参数
   '/search2': (context, {arguments}) => SearchPage2(arguments: arguments),
   '/productContent': (context, {arguments}) =>
-      ProductContentPage(arguments: arguments)
+      ProductContentPage(arguments: arguments),
+  '/customViewRotated': (context, {arguments}) =>
+      CustomViewRotated(arguments: arguments),
+  '/customPaint': (context, {arguments}) =>
+      CustomPainRoute(arguments: arguments),
+  '/customCheckBox': (context, {arguments}) =>
+      CustomCheckboxTest(arguments: arguments)
 };
 
 //固定写法
