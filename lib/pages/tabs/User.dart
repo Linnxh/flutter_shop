@@ -24,7 +24,7 @@ class _UserPageState extends State<UserPage> {
               alignment: Alignment.center,
               child: Text(
                 "CustomView Rotated",
-                style: TextStyle(fontSize: 15,color: Colors.white),
+                style: TextStyle(fontSize: 15, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -40,7 +40,7 @@ class _UserPageState extends State<UserPage> {
               alignment: Alignment.center,
               child: Text(
                 "CustomView Paint Canvas",
-                style: TextStyle(fontSize: 15,color: Colors.black),
+                style: TextStyle(fontSize: 15, color: Colors.black),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -56,13 +56,58 @@ class _UserPageState extends State<UserPage> {
               alignment: Alignment.center,
               child: Text(
                 "CustomView checkbox",
-                style: TextStyle(fontSize: 15,color: Colors.white),
+                style: TextStyle(fontSize: 15, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),
             onTap: () {
               Navigator.pushNamed(context, '/customCheckBox',
                   arguments: {"id": "testhaha"});
+            },
+          ),
+          InkWell(
+            child: Container(
+              height: 50,
+              color: Colors.pinkAccent,
+              alignment: Alignment.center,
+              child: Text(
+                "Layout1",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/layout1');
+            },
+          ),
+          InkWell(
+            child: Container(
+              height: 50,
+              color: Colors.blueAccent,
+              alignment: Alignment.center,
+              child: Text(
+                "homeView",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/homeView');
+            },
+          ),
+          InkWell(
+            child: Container(
+              height: 50,
+              color: Colors.redAccent,
+              alignment: Alignment.center,
+              child: Text(
+                "TabLayout",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/TabLayout');
             },
           )
         ],

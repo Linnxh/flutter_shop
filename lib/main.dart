@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(create: (BuildContext context) {
                 Counter();
               }),
+
               /// 这个写法报错，具体原因是？
               // ChangeNotifierProvider(create: (BuildContext context) {
               //   CartProvider();
@@ -37,14 +38,16 @@ class _MyAppState extends State<MyApp> {
                   create: (BuildContext context) {
                 return CartProvider();
               }),
-              ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
+              ChangeNotifierProvider<CartProvider>(
+                  create: (_) => CartProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: "/",
               onGenerateRoute: onGenerateRoute,
               theme: ThemeData(
-                  primaryColor: Colors.white, primaryColorLight: Colors.white),
+                  primaryColor: Colors.green,
+                  primaryColorLight: Colors.greenAccent),
             ));
       },
       // child: MultiProvider(
