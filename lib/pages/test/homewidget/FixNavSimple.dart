@@ -98,16 +98,35 @@ class _LayoutText2State extends State<FixNavSimple>
                 ],
               )),
           Container(
-            child: TabBar(
-              onTap: (index) {
-                print(index); /// 点击事件
-              },
-              controller: _tabController,
-              tabs: homeLinkDataList?.map((e) {
-                    return Text(e.text ?? "",
-                        style: TextStyle(color: Colors.black, fontSize: 22));
-                  }).toList() ??
-                  [Text("no data")],
+            /// 必须指定高度
+            height: 50,
+            color: Colors.greenAccent,
+            alignment: Alignment.center,
+
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  child: TabBar(
+                    controller: _tabController,
+                    tabs: homeLinkDataList?.map((e) {
+                          return Text(e.text ?? "",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 22));
+                        }).toList() ??
+                        [Text("no data")],
+                  ),
+                ),
+                Expanded(
+                    child: TabBarView(
+                        controller: _tabController,
+                        children: homeLinkDataList?.isEmpty == true
+                            ? []
+                            : homeLinkDataList?.map((e) {
+                                  return Text("第${e.text}页面");
+                                }).toList() ??
+                                [Text("no data")]))
+              ],
             ),
           )
         ],
@@ -119,7 +138,6 @@ class _LayoutText2State extends State<FixNavSimple>
   bool get wantKeepAlive => true;
 }
 
-/// lxh_tips listview 如果子节点是column,子组件里使用了Expanded,会报错
 // @override
 // Widget build(BuildContext context) {
 //   return SliverToBoxAdapter(

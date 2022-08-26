@@ -22,7 +22,7 @@ class _DevicePageState extends State<DevicePage>
     "12",
     "13"
   ];
-  TabController _tabController;
+  TabController? _tabController;
 
   @protected
   bool get wantKeepAlive => true;
@@ -34,9 +34,9 @@ class _DevicePageState extends State<DevicePage>
     _tabController = TabController(
         initialIndex: 0, length: _spList.length, vsync: this); // 直接传this
 
-    print("---->${_tabController.previousIndex}");
+    print("---->${_tabController?.previousIndex}");
 
-    if (_tabController.indexIsChanging) {
+    if (_tabController?.indexIsChanging == true) {
       print("---->indexch");
     }
   }
@@ -54,7 +54,7 @@ class _DevicePageState extends State<DevicePage>
             buttonPadding: EdgeInsets.only(left: 1),
             children: <Widget>[
               RaisedButton(
-                onPressed: () {  },
+                onPressed: () {},
                 child: Text("device"),
               ),
               RaisedButton(
@@ -64,7 +64,7 @@ class _DevicePageState extends State<DevicePage>
                     _spList = ["1", "2", "3", "4", "5"];
                     _tabController = TabController(
                         initialIndex: 1, length: _spList.length, vsync: this);
-                    _tabController.animateTo(0);
+                    _tabController?.animateTo(0);
                   });
                 },
               )

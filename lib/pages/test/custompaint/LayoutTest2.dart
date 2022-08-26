@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/pages/test/homewidget/FixNav.dart';
+import 'package:flutter_shop/pages/test/homewidget/TabLayout.dart';
 
 import '../../../model/HomeDataModel.dart';
 import '../homewidget/FixNavSimple.dart';
@@ -55,6 +56,7 @@ class _LayoutText2State extends State<LayoutTest2> {
         // widgetList.add(FixNav(arguments: item.setting));
         // widgetList.add(FixNav(arguments: item.setting));
       }
+      widgetList.add(TabLayout());
     }
     print("=========");
     print(dataList.toString());
