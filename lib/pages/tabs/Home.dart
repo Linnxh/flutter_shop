@@ -2,10 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_shop/framework/network2/Git.dart';
 import 'package:flutter_shop/pages/services/ScreenAdaper.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 import '../../config/Config.dart';
+import '../../framework/network/login.dart';
 import '../../model/FocusModel.dart';
 import '../../model/ProductModel.dart';
 
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   List _focusData = [];
   List _hotProductList = [];
   List _bestProductList = [];
+  String _test = "";
 
   @override
   void initState() {
@@ -27,6 +30,26 @@ class _HomePageState extends State<HomePage> {
     _getFocusData();
     _getHotProductData();
     _getBestProductData();
+
+    /// lxh_tips: 使用新的网络请求的框架，请求用户数据中心数据
+    // LoginService.getDataCenter().then((value) {
+    //   setState(() {
+    //     _bestProductList = value;
+    //   });
+    // });
+
+    Git(context).getTextData().then((value) {
+      setState(() {
+        _test = value;
+      });
+    });
+
+    /// lxh_tips: 使用新的网络请求的框架，请求用户数据中心数据
+    LoginService.menuNav().then((value) {
+      setState(() {
+        var _dataCenterList = value;
+      });
+    });
   }
 
   //获取轮播图数据

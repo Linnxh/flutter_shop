@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_shop/framework/Global.dart';
 import 'package:flutter_shop/pages/provider/CartProvider.dart';
 import 'package:flutter_shop/pages/provider/Counter.dart';
 
@@ -7,7 +8,8 @@ import 'package:flutter_shop/routers/router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  /// 全局变量初始化 Global
+  Global.init().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -16,7 +18,7 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
+final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey();
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class _MyAppState extends State<MyApp> {
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: "/",
+              navigatorKey: globalNavigatorKey,
               onGenerateRoute: onGenerateRoute,
               theme: ThemeData(
                   primaryColor: Colors.green,
