@@ -8,6 +8,7 @@ import 'package:flutter_shop/pages/test/homewidget/FixNav.dart';
 import '../pages/SearchPage2.dart';
 import '../pages/productContent/ProductContent.dart';
 import '../pages/test/CustomViewRotated.dart';
+import '../pages/test/PullToRefresh.dart';
 import '../pages/test/custompaint/CustomPaintRoute.dart';
 import '../pages/test/custompaint/LayoutTest2.dart';
 import '../pages/test/homewidget/FixNavSimple.dart';
@@ -35,7 +36,8 @@ final routes = {
   '/homeView': (context) => LayoutTest2(),
   '/fixnav': (context, {arguments}) => FixNav(arguments: arguments),
   '/fixnavsimple': (context, {arguments}) => FixNavSimple(arguments: arguments),
-  '/TabLayout': (context, {arguments}) => TabLayout(arguments: arguments)
+  '/TabLayout': (context, {arguments}) => TabLayout(arguments: arguments),
+  '/PullToRefresh': (context, {arguments}) => PullToRefresh()
 };
 
 //固定写法

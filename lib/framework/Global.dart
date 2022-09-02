@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/framework/network/dio_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/profile.dart';
 import 'network2/Git.dart';
 import 'network2/network.dart';
 
@@ -19,7 +17,8 @@ const _themes = <MaterialColor>[
 
 class Global {
   static late SharedPreferences _prefs;
-  static Profile profile = Profile();
+
+  // static Profile profile = Profile();
 
   // 网络缓存对象
   static NetInterceptor netInterceptor = NetInterceptor();
@@ -59,7 +58,7 @@ class Global {
     Git.init();
   }
 
-// 持久化Profile信息
-static saveProfile() =>
-    _prefs.setString("profile", jsonEncode(profile.toJson()));
+// // 持久化Profile信息
+// static saveProfile() =>
+//     _prefs.setString("profile", jsonEncode(profile.toJson()));
 }

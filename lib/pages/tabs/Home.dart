@@ -1,8 +1,13 @@
+import 'dart:collection';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/framework/network2/Git.dart';
+import 'package:flutter_shop/models/business_title.dart';
+import 'package:flutter_shop/models_base/api_response_entity.dart';
 import 'package:flutter_shop/pages/services/ScreenAdaper.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
@@ -36,20 +41,27 @@ class _HomePageState extends State<HomePage> {
     //   setState(() {
     //     _bestProductList = value;
     //   });
+    // // });
+    // Map<String, dynamic> map = Map();
+    // map["dateStr"] = "2022-09-02";
+    // map["dateType"] = 1;
+    // map["fromType"] = 1;
+    // Git(context).getTextData(map).then((value) {
+    //   setState(() {
+    //     // _test = value;
+    //     ApiResponseEntity<List<BusinessTitle>> resp =
+    //         ApiResponseEntity.fromJson(value);
+    //     print("===============");
+    //     print("===============resp==" + resp.toJson().toString());
+    //   });
     // });
 
-    Git(context).getTextData().then((value) {
-      setState(() {
-        _test = value;
-      });
-    });
-
     /// lxh_tips: 使用新的网络请求的框架，请求用户数据中心数据
-    LoginService.menuNav().then((value) {
-      setState(() {
-        var _dataCenterList = value;
-      });
-    });
+    // LoginService.menuNav().then((value) {
+    //   setState(() {
+    //     var _dataCenterList = value;
+    //   });
+    // });
   }
 
   //获取轮播图数据

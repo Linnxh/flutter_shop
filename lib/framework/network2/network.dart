@@ -2,9 +2,10 @@ import 'dart:collection';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/main.dart';
-import '../Global.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-/**
+/****
+ *
  * 参考：https://book.flutterchina.club/chapter15/network.html#_15-5-1-%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3%E7%BC%93%E5%AD%98
  */
 class CacheObject {
@@ -64,25 +65,26 @@ class NetInterceptor extends Interceptor {
     print("url = ${options.uri.toString()}");
     print("headers = ${options.headers}");
     print("params = ${options.data}");
-
     handler.next(options);
   }
 
   @override
   onResponse(Response response, ResponseInterceptorHandler handler) async {
-    // // 如果启用缓存，将返回结果保存到缓存
-    // if (Global.profile.cache!.enable) {
-    //   _saveCache(response);
-    // }
     print("\n================== 响应数据 ==========================");
+
     print("code = ${response.statusCode}");
     print("data = ${response.data}");
     print("\n");
-    handler.next(response);
-    if (response.statusCode == 401) {
-      /// 拦截跳转
-      globalNavigatorKey.currentState
-          ?.pushNamedAndRemoveUntil("/TabLayout", (route) => false);
+    if (response.data['code'] != 1) {
+      // 当返回的code!=1时，需要吐司提示，1-->>显示 0-->>不显示  默认：显示
+      var isShowErrorToast = response.requestOptions.extra["isShowErrorToast"];
+      if (isShowErrorToast == null ||
+          (isShowErrorToast != null && isShowErrorToast == 1)) {
+        Fluttertoast.showToast(
+            msg: "" + response.data["msg"],
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER);
+      }
     }
     handler.next(response);
   }
@@ -92,7 +94,20 @@ class NetInterceptor extends Interceptor {
     print("\n================== 错误响应数据 ======================");
     print("type = ${e.type}");
     print("message = ${e.message}");
+    print("resp = ${e.response}");
     print("\n");
+    if (e.response?.statusCode == 401) {
+      /// 拦截跳转
+      // globalNavigatorKey.currentState
+      //     ?.pushNamedAndRemoveUntil("/TabLayout", (route) => false);
+      globalNavigatorKey.currentState?.pushNamed("/TabLayout");
+    } else {
+      Fluttertoast.showToast(
+          msg: "internet error" + e.message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
+
     return handler.next(e);
   }
 
@@ -101,18 +116,18 @@ class NetInterceptor extends Interceptor {
   //     ErrorInterceptorHandler handler,
   //     ) =>
   //     handler.next(err);
-  _saveCache(Response object) {
-    RequestOptions options = object.requestOptions;
-    if (options.extra["noCache"] != true &&
-        options.method.toLowerCase() == "get") {
-      // 如果缓存数量超过最大数量限制，则先移除最早的一条记录
-      if (cache.length == Global.profile.cache!.maxCount) {
-        cache.remove(cache[cache.keys.first]);
-      }
-      String key = options.extra["cacheKey"] ?? options.uri.toString();
-      cache[key] = CacheObject(object);
-    }
-  }
+  // _saveCache(Response object) {
+  //   RequestOptions options = object.requestOptions;
+  //   if (options.extra["noCache"] != true &&
+  //       options.method.toLowerCase() == "get") {
+  //     // 如果缓存数量超过最大数量限制，则先移除最早的一条记录
+  //     if (cache.length == Global.profile.cache!.maxCount) {
+  //       cache.remove(cache[cache.keys.first]);
+  //     }
+  //     String key = options.extra["cacheKey"] ?? options.uri.toString();
+  //     cache[key] = CacheObject(object);
+  //   }
+  // }
 
   void delete(String key) {
     cache.remove(key);

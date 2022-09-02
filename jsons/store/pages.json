@@ -1,0 +1,12 @@
+{
+  "size": 20,
+  "current": 1,
+  "total": 10,
+  "records": "$[]storeBean",
+  "optimizeCountSql": true,
+  "searchCount": true,
+  "countId": null,
+  "maxLimit": null,
+  "pages": 1,
+  "actualSearchCount": null
+}
