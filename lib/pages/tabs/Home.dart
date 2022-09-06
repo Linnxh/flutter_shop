@@ -10,6 +10,7 @@ import 'package:flutter_shop/models/business_title.dart';
 import 'package:flutter_shop/models_base/api_response_entity.dart';
 import 'package:flutter_shop/pages/services/ScreenAdaper.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../config/Config.dart';
 import '../../framework/network/login.dart';
@@ -28,6 +29,11 @@ class _HomePageState extends State<HomePage> {
   List _hotProductList = [];
   List _bestProductList = [];
   String _test = "";
+
+
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
+
 
   @override
   void initState() {
@@ -396,21 +402,51 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("home"),
         backgroundColor: Colors.pinkAccent,
       ),
-      body: ListView(
-        children: <Widget>[
-          _swiperWidget(),
-          _titleWidget("猜你喜欢"),
-          SizedBox(height: ScreenAdaper.height(12)),
-          _hotProductListWidget(),
-          // SizedBox(height: ScreenAdaper.height(12)),
-          _titleWidget("热门推荐"),
-          _recProductListItemWidget3()
-        ],
+      body: SmartRefresher(
+        enablePullDown: true,
+
+        enablePullUp: true,
+        header: MaterialClassicHeader(),
+        footer: CustomFooter(
+          builder: (BuildContext context, LoadStatus? mode) {
+            Widget body;
+            if (mode == LoadStatus.idle) {
+              body = Text("上拉加载");
+            } else if (mode == LoadStatus.loading) {
+              body = CupertinoActivityIndicator();
+            } else if (mode == LoadStatus.failed) {
+              body = Text("加载失败！点击重试！");
+            } else if (mode == LoadStatus.canLoading) {
+              body = Text("松手,加载更多!");
+            } else {
+              body = Text("没有更多数据了!");
+            }
+            return Container(
+              height: 55.0,
+              child: Center(child: body),
+            );
+          },
+        ),
+        controller: _refreshController,
+        // onRefresh: _onRefresh,
+        // onLoading: _onLoading,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverToBoxAdapter(child: _swiperWidget()),
+            SliverToBoxAdapter(child: _titleWidget("猜你喜欢")),
+            SliverToBoxAdapter(child: SizedBox(height: ScreenAdaper.height(12))),
+            SliverToBoxAdapter(child: _hotProductListWidget()),
+            // SizedBox(height: ScreenAdaper.height(12)),
+            SliverToBoxAdapter(child: _titleWidget("热门推荐")),
+            SliverToBoxAdapter(child: _recProductListItemWidget3())
+          ],
+        ),
       ),
     );
   }
