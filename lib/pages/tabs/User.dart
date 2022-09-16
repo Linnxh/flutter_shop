@@ -124,6 +124,21 @@ class _UserPageState extends State<UserPage> {
             onTap: () {
               Navigator.pushNamed(context, '/PullToRefresh');
             },
+          ),
+          InkWell(
+            child: Container(
+              height: 50,
+              color: Colors.redAccent,
+              alignment: Alignment.center,
+              child: Text(
+                "PullToRefresh",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/PullToRefresh');
+            },
           )
         ],
       ),

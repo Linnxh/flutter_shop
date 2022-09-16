@@ -20,7 +20,7 @@ class Git {
   late Options _options;
   static Dio dio = Dio(BaseOptions(
       baseUrl: 'http://api.test.egatee.cn',
-      headers: {},
+      headers: {"COUNTRY_ID": 1},
       contentType: "application/json"));
 
   static void init() {
@@ -56,13 +56,26 @@ class Git {
 
   Future<Map<String, dynamic>> getStoreList(map) async {
     var r = await dio.post("/api/user/buyer/listBuyersByDistancePage",
-        data: map, options: Options(extra: {"isShowErrorToast": 1})); /// 设置附加参数，不显示toast，回掉中自行处理
+        data: map, options: Options(extra: {"isShowErrorToast": 1}));
+
+    /// 设置附加参数，不显示toast，回掉中自行处理
     return r.data;
   }
 
   Future<Map<String, dynamic>> getSalesmanSale(map) async {
     var r = await dio.post("/api/order/orderstatistics/simpleSalesmanSale",
         data: map);
+    return r.data;
+  }
+
+  Future<Map<String, dynamic>> queryCategoryList(map) async {
+    var r = await dio.post("/api/search/search/queryCategoryList",
+        data: map,
+        options: Options(
+            // extra: {"isShowErrorToast": 1}
+            ));
+
+    /// 设置附加参数，不显示toast，回掉中自行处理
     return r.data;
   }
 }

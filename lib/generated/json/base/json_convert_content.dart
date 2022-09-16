@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:flutter_shop/models/business_title.dart';
 import 'package:flutter_shop/models/news.dart';
 import 'package:flutter_shop/models/person_entity.dart';
+import 'package:flutter_shop/models/product/category.dart';
 import 'package:flutter_shop/models/store_list.dart';
 import 'package:flutter_shop/models/visit_ranking.dart';
 
@@ -18,6 +19,8 @@ class JsonConvert {
 		(BusinessTitle).toString(): BusinessTitle.fromJson,
 		(News).toString(): News.fromJson,
 		(PersonEntity).toString(): PersonEntity.fromJson,
+		(Category).toString(): Category.fromJson,
+		(CategoryChildCategoryList).toString(): CategoryChildCategoryList.fromJson,
 		(StoreList).toString(): StoreList.fromJson,
 		(VisitRanking).toString(): VisitRanking.fromJson,
 	};
@@ -103,6 +106,12 @@ class JsonConvert {
 		}
 		if(<PersonEntity>[] is M){
 			return data.map<PersonEntity>((Map<String, dynamic> e) => PersonEntity.fromJson(e)).toList() as M;
+		}
+		if(<Category>[] is M){
+			return data.map<Category>((Map<String, dynamic> e) => Category.fromJson(e)).toList() as M;
+		}
+		if(<CategoryChildCategoryList>[] is M){
+			return data.map<CategoryChildCategoryList>((Map<String, dynamic> e) => CategoryChildCategoryList.fromJson(e)).toList() as M;
 		}
 		if(<StoreList>[] is M){
 			return data.map<StoreList>((Map<String, dynamic> e) => StoreList.fromJson(e)).toList() as M;

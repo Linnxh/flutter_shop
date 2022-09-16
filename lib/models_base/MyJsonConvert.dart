@@ -14,12 +14,14 @@ class MyJsonConvert extends JsonConvert {
   T? asT<T extends Object?>(dynamic value) {
     try {
       String type = T.toString();
+      if (type == "List<Category>") {
+        return JsonConvert.fromJsonAsT<T>(value);
+      }
       if (type == "List<VisitRanking>") {
-        // 解析数据的方法
         return JsonConvert.fromJsonAsT<T>(value);
       } else if (type == "PageModel<News>") {
         return PageModel<News>.fromJson(value) as T;
-      }else if (type == "PageModel<StoreList>") {
+      } else if (type == "PageModel<StoreList>") {
         return PageModel<StoreList>.fromJson(value) as T;
       }
       // else if (type.startsWith("List<")) {
