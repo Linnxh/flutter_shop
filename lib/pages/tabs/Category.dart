@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/models/product/category.dart';
@@ -21,7 +20,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-
     super.initState();
     Map<String, dynamic> map = Map();
     map["firstCategoryBackId"] = null;
@@ -38,7 +36,6 @@ class _CategoryPageState extends State<CategoryPage> {
         });
       });
     });
-
   }
 
   @override
@@ -82,11 +79,40 @@ class _CategoryPageState extends State<CategoryPage> {
                           color: Color(0xffF5F6F8),
                           child: Column(
                             children: [
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: ClipRRect(
+                                  borderRadius:
+                                  BorderRadius.circular(8),
+                                  child: FadeInImage.assetNetwork(
+                                    image: list![index].icon == null
+                                        ? ""
+                                        : list![index].icon!,
+                                    fit: BoxFit.cover,
+                                    placeholder:
+                                    'images/ic_yellow.png',
+                                    imageErrorBuilder:
+                                        (context, error, stack) {
+                                      return Image.asset(
+                                          'images/default.png');
+                                    },
+                                    // width: 50,
+                                    // height: 50,
+                                  ),
+                                ),
+                              ),
                               Container(
-                                  alignment: Alignment.centerLeft,
+                                  // 多行文字
+                                  alignment: Alignment.center,
                                   height: 50,
+                                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                   child: Text(
-                                      list![index].name! + index.toString())),
+                                    list![index].name! + index.toString(),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
                               Container(
                                 color: Colors.white,
                                 height: 5,
