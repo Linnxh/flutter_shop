@@ -76,18 +76,25 @@ class _CartPageState extends State<CartPage> {
                               alignment: Alignment.centerLeft,
                               child: Row(
                                 children: [
-                                  Checkbox(
-                                    value: cartProvider.isCheckedAll,
-                                    onChanged: (val) {
-                                      cartProvider.checkAll(val);
-                                    },
-                                    activeColor: Colors.pink,
-                                  ),
-                                  Text("checkAll",
+                                  // Checkbox(
+                                  //   value: cartProvider.isCheckedAll,
+                                  //   onChanged: (val) {
+                                  //     cartProvider.checkAll(val);
+                                  //   },
+                                  //   activeColor: Colors.pink,
+                                  // ),
+                                  // Text("checkAll",
+                                  //     style: TextStyle(
+                                  //         color: Colors.red, fontSize: 17)),
+                                  // SizedBox(width: 5),
+                                  Text("colorsssss",
                                       style: TextStyle(
-                                          color: Colors.red, fontSize: 17)),
-                                  SizedBox(width: 5),
-                                  isEdit == false ? Text("sumPrice") : Text(""),
+                                          color: isEdit == false
+                                              ? Colors.yellowAccent
+                                              : Colors.blueAccent)),
+                                  isEdit == false
+                                      ? Text("sumPrice", style: TextStyle())
+                                      : Text(""),
                                   SizedBox(width: 5),
                                   isEdit == false
                                       ? Text(

@@ -101,6 +101,10 @@ class NetInterceptor extends Interceptor {
       // globalNavigatorKey.currentState
       //     ?.pushNamedAndRemoveUntil("/TabLayout", (route) => false);
       globalNavigatorKey.currentState?.pushNamed("/TabLayout");
+      Fluttertoast.showToast(
+          msg: "登陆信息失效啦~",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
     } else {
       Fluttertoast.showToast(
           msg: "internet error" + e.message,

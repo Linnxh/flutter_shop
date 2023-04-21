@@ -20,20 +20,24 @@ class Git {
   late Options _options;
   static Dio dio = Dio(BaseOptions(
       baseUrl: 'http://api.test.egatee.cn',
-      headers: {"COUNTRY_ID": 1},
+      headers: {
+        "SYSTEM_TYPE": 1,
+        "COUNTRY_CODE": "UG",
+        "COUNTRY_ID": 1,
+        "Accept-Language": "en-US,en",
+      },
       contentType: "application/json"));
 
   static void init() {
     // 网络请求拦截器
     dio.interceptors.add(Global.netInterceptor);
-    dio.options.headers["Authorization"] =
-        "Bearer bc89b594-791b-446a-91a3-9a50c769d4c3";
+    dio.options.headers["Authorization"] = "Basic enV1bDp6dXVs";
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
     if (!Global.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
-          return 'PROXY 172.16.1.7:8888';
+          return 'PROXY 172.16.0.7:8888';
         };
         //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
         client.badCertificateCallback =

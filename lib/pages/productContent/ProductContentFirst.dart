@@ -160,7 +160,7 @@ class _ProductContentFirstState extends State<ProductContentFirst>
         context: context,
         builder: (contex) {
           return StatefulBuilder(
-            builder: (BuildContext context, setBottomState) {
+            builder: (BuildContext context, StateSetter setBottomState) {
               return Stack(
                 alignment: Alignment.topLeft,
                 children: <Widget>[

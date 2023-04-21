@@ -13,7 +13,8 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State<CategoryPage>
+    with AutomaticKeepAliveClientMixin {
   bool isExpand = false;
   List<Category> list = [];
   String selectId = "";
@@ -40,6 +41,10 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    ///  保持页面状态，仅在首次加载
+    /// 混入 时 AutomaticKeepAliveClientMixin 必须调用
+    super.build(context);
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -83,19 +88,15 @@ class _CategoryPageState extends State<CategoryPage> {
                                 width: 20,
                                 height: 20,
                                 child: ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(8),
                                   child: FadeInImage.assetNetwork(
                                     image: list![index].icon == null
                                         ? ""
                                         : list![index].icon!,
                                     fit: BoxFit.cover,
-                                    placeholder:
-                                    'images/ic_yellow.png',
-                                    imageErrorBuilder:
-                                        (context, error, stack) {
-                                      return Image.asset(
-                                          'images/default.png');
+                                    placeholder: 'images/ic_yellow.png',
+                                    imageErrorBuilder: (context, error, stack) {
+                                      return Image.asset('images/default.png');
                                     },
                                     // width: 50,
                                     // height: 50,
@@ -159,6 +160,9 @@ class _CategoryPageState extends State<CategoryPage> {
           ],
         ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 /// 方法一：title本身是一个widget，自定义即可

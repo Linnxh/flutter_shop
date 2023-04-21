@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/models/store_list.dart';
 import 'package:flutter_shop/models_base/page_model.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -83,11 +82,9 @@ class _PullToRefreshStateCustom extends State<PullToRefreshCustom> {
         // alignment: Alignment.center,
         children: [
           Container(
-            margin:EdgeInsets.fromLTRB(0, 0, 0, 50) ,
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
             child: SmartRefresher(
-
               enablePullDown: true,
-
               enablePullUp: true,
               header: MaterialClassicHeader(),
               footer: CustomFooter(
@@ -178,13 +175,14 @@ class _PullToRefreshStateCustom extends State<PullToRefreshCustom> {
                                               child: Column(
                                                 // 主轴方向
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceAround,
+                                                    MainAxisAlignment
+                                                        .spaceAround,
                                                 // 于主轴垂直的方向
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      storeList[index].buyerName),
+                                                  Text(storeList[index]
+                                                      .buyerName),
                                                   Text(
                                                     "phone:" +
                                                         storeList[index]
@@ -208,7 +206,8 @@ class _PullToRefreshStateCustom extends State<PullToRefreshCustom> {
                                           child: Center(
                                               child: Text(
                                             "routed",
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           )),
                                         )
                                       ],
@@ -226,7 +225,8 @@ class _PullToRefreshStateCustom extends State<PullToRefreshCustom> {
                                         Text(
                                           storeList[index].distanceStr != null
                                               ? "Abount " +
-                                                  storeList[index].distanceStr! +
+                                                  storeList[index]
+                                                      .distanceStr! +
                                                   " km"
                                               : "--",
                                           style: TextStyle(
@@ -246,11 +246,17 @@ class _PullToRefreshStateCustom extends State<PullToRefreshCustom> {
           ),
           Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.redAccent,
-                child: Center(child: Text("===submit==")),
-                height: 50,
-                width: double.infinity,
+              child: GestureDetector(
+                onTap: () {
+                  map["contactTelOrBuyerName"] = 1;
+                  _refreshController.requestRefresh();
+                },
+                child: Container(
+                  color: Colors.redAccent,
+                  child: Center(child: Text("===submit==")),
+                  height: 50,
+                  width: double.infinity,
+                ),
               )),
         ],
       ),
