@@ -10,6 +10,8 @@ import 'package:flutter_shop/models/person_entity.dart';
 import 'package:flutter_shop/models/product/category.dart';
 import 'package:flutter_shop/models/store_list.dart';
 import 'package:flutter_shop/models/visit_ranking.dart';
+import 'package:flutter_shop/pages/test/jde/model/commission_balance_model.dart';
+import 'package:flutter_shop/pages/test/jde/model/commission_valus_model.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 typedef JsonConvertFunction<T> = T Function(Map<String, dynamic> json);
@@ -23,6 +25,8 @@ class JsonConvert {
 		(CategoryChildCategoryList).toString(): CategoryChildCategoryList.fromJson,
 		(StoreList).toString(): StoreList.fromJson,
 		(VisitRanking).toString(): VisitRanking.fromJson,
+		(CommissionBalanceModel).toString(): CommissionBalanceModel.fromJson,
+		(CommissionValueModel).toString(): CommissionValueModel.fromJson,
 	};
 
   T? convert<T>(dynamic value) {
@@ -118,6 +122,12 @@ class JsonConvert {
 		}
 		if(<VisitRanking>[] is M){
 			return data.map<VisitRanking>((Map<String, dynamic> e) => VisitRanking.fromJson(e)).toList() as M;
+		}
+		if(<CommissionBalanceModel>[] is M){
+			return data.map<CommissionBalanceModel>((Map<String, dynamic> e) => CommissionBalanceModel.fromJson(e)).toList() as M;
+		}
+		if(<CommissionValueModel>[] is M){
+			return data.map<CommissionValueModel>((Map<String, dynamic> e) => CommissionValueModel.fromJson(e)).toList() as M;
 		}
 
 		debugPrint("${M.toString()} not found");

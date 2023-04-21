@@ -5,6 +5,7 @@ import 'package:flutter_shop/pages/tabs/Cart.dart';
 import 'package:flutter_shop/pages/tabs/Tabs.dart';
 import 'package:flutter_shop/pages/test/PullToRefreshCustom.dart';
 import 'package:flutter_shop/pages/test/homewidget/FixNav.dart';
+import 'package:flutter_shop/pages/test/jde/JdeMainPage.dart';
 
 import '../pages/SearchPage2.dart';
 import '../pages/productContent/ProductContent.dart';
@@ -38,7 +39,8 @@ final routes = {
   '/fixnav': (context, {arguments}) => FixNav(arguments: arguments),
   '/fixnavsimple': (context, {arguments}) => FixNavSimple(arguments: arguments),
   '/TabLayout': (context, {arguments}) => TabLayout(arguments: arguments),
-  '/PullToRefresh': (context, {arguments}) => PullToRefreshCustom()
+  '/PullToRefresh': (context, {arguments}) => PullToRefreshCustom(),
+  '/jdeMainPage': (context, {arguments}) => JdeMainPage()
 };
 
 //固定写法

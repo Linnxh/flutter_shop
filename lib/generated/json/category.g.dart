@@ -43,6 +43,10 @@ Category $CategoryFromJson(Map<String, dynamic> json) {
 	if (childCategoryList != null) {
 		category.childCategoryList = childCategoryList;
 	}
+	final bool? isExpand = jsonConvert.convert<bool>(json['isExpand']);
+	if (isExpand != null) {
+		category.isExpand = isExpand;
+	}
 	return category;
 }
 
@@ -58,6 +62,7 @@ Map<String, dynamic> $CategoryToJson(Category entity) {
 	data['isSelected'] = entity.isSelected;
 	data['frontCategoryType'] = entity.frontCategoryType;
 	data['childCategoryList'] =  entity.childCategoryList?.map((v) => v.toJson()).toList();
+	data['isExpand'] = entity.isExpand;
 	return data;
 }
 
