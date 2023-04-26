@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -13,7 +14,12 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User"),
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+
+            /// 设置 状态栏图标为深色
+            statusBarIconBrightness: Brightness.dark),
+        // title: Text("User"),
       ),
       body: ListView(
         children: [
@@ -131,13 +137,13 @@ class _UserPageState extends State<UserPage> {
               color: Colors.redAccent,
               alignment: Alignment.center,
               child: Text(
-                "PullToRefresh",
+                "PullToRefreshCustom",
                 style: TextStyle(fontSize: 15, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/PullToRefresh');
+              Navigator.pushNamed(context, '/PullToRefreshCustom');
             },
           ),
           InkWell(
@@ -153,6 +159,21 @@ class _UserPageState extends State<UserPage> {
             ),
             onTap: () {
               Navigator.pushNamed(context, '/jdeMainPage');
+            },
+          ),
+          InkWell(
+            child: Container(
+              height: 50,
+              color: Colors.blueAccent,
+              alignment: Alignment.center,
+              child: Text(
+                "jde-task",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/taskListPage');
             },
           )
         ],

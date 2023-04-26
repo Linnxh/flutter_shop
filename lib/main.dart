@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/framework/Global.dart';
 import 'package:flutter_shop/pages/provider/CartProvider.dart';
@@ -9,7 +12,15 @@ import 'package:provider/provider.dart';
 
 void main() {
   /// 全局变量初始化 Global
-  Global.init().then((value) => runApp(const MyApp()));
+  Global.init().then((value) {
+    runApp(const MyApp());
+    if (Platform.isAndroid) {
+      SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light);
+      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    }
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -18,7 +29,9 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
 final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey();
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -49,8 +62,13 @@ class _MyAppState extends State<MyApp> {
               navigatorKey: globalNavigatorKey,
               onGenerateRoute: onGenerateRoute,
               theme: ThemeData(
-                  primaryColor: Colors.green,
-                  primaryColorLight: Colors.greenAccent),
+                primaryColor: Colors.green,
+                primaryColorLight: Colors.greenAccent,
+
+                // backgroundColor: Colors.yellowAccent,
+                // canvasColor: Colors.yellowAccent,
+                // scaffoldBackgroundColor: Colors.teal
+              ),
             ));
       },
       // child: MultiProvider(

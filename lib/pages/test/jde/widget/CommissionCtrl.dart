@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/pages/test/jde/model/commission.dart';
 
@@ -32,9 +30,14 @@ class _CommissionCtrlState extends State<CommissionCtrl> {
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          "My Balance",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/cart");
+                          },
+                          child: const Text(
+                            "My Balance",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
                         ),
                         SizedBox(
                           width: 5,
@@ -97,10 +100,10 @@ class _CommissionCtrlState extends State<CommissionCtrl> {
                       bottomRight: Radius.circular(8))),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
               decoration: BoxDecoration(
-                  color: Colors.greenAccent,
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
