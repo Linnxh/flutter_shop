@@ -6,6 +6,8 @@ import 'package:flutter_shop/pages/tabs/Tabs.dart';
 import 'package:flutter_shop/pages/test/PullToRefreshCustom.dart';
 import 'package:flutter_shop/pages/test/homewidget/FixNav.dart';
 import 'package:flutter_shop/pages/test/jde/JdeMainPage.dart';
+import 'package:flutter_shop/pages/test/jde/LocationPage.dart';
+import 'package:flutter_shop/pages/test/jde/MapSample.dart';
 import 'package:flutter_shop/pages/test/jde/TaskListPage.dart';
 
 import '../pages/SearchPage2.dart';
@@ -43,7 +45,9 @@ final routes = {
   '/PullToRefresh': (context, {arguments}) => PullToRefresh(),
   '/PullToRefreshCustom': (context, {arguments}) => PullToRefreshCustom(),
   '/jdeMainPage': (context, {arguments}) => JdeMainPage(),
-  '/taskListPage': (context, {arguments}) => TaskListPage()
+  '/taskListPage': (context, {arguments}) => TaskListPage(),
+  '/googleMap': (context, {arguments}) => MapSample(),
+  '/location': (context, {arguments}) => LocationPage(),
 };
 
 //固定写法

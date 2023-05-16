@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -71,113 +71,48 @@ class _UserPageState extends State<UserPage> {
                   arguments: {"id": "testhaha"});
             },
           ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.pinkAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "Layout1",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/layout1');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.blueAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "homeView",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/homeView');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.redAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "TabLayout",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/TabLayout');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.blueGrey,
-              alignment: Alignment.center,
-              child: Text(
-                "PullToRefresh",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/PullToRefresh');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.redAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "PullToRefreshCustom",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/PullToRefreshCustom');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.redAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "jde-首页",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/jdeMainPage');
-            },
-          ),
-          InkWell(
-            child: Container(
-              height: 50,
-              color: Colors.blueAccent,
-              alignment: Alignment.center,
-              child: Text(
-                "jde-task",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/taskListPage');
-            },
-          )
+          userItemView(context, "layout1", "/layout1"),
+          userItemView(context, "homeView", "/homeView"),
+          userItemView(context, "TabLayout", "/TabLayout"),
+          userItemView(context, "PullToRefresh", "/PullToRefresh"),
+          userItemView(context, "PullToRefreshCustom", "/PullToRefreshCustom"),
+          userItemView(context, "jde-首页", "/jdeMainPage"),
+          userItemView(context, "jde-task", "/taskListPage"),
+          userItemView(context, "googleMap", "/googleMap"),
+          userItemView(context, "googleLocation", "/location"),
         ],
       ),
     );
   }
+}
+
+Widget userItemView(BuildContext context, String title, String routeName) {
+  var bgColorsList = [
+    Colors.redAccent,
+    Colors.greenAccent,
+    Colors.purple,
+    Colors.blueAccent,
+    Colors.teal,
+    Colors.deepOrangeAccent,
+    Colors.lightGreen,
+    Colors.blueGrey,
+    Colors.pinkAccent,
+    Colors.indigo,
+  ];
+  var nextInt = Random().nextInt(10);
+  return InkWell(
+    child: Container(
+      height: 50,
+      color: bgColorsList[nextInt],
+      alignment: Alignment.center,
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 15, color: Colors.white),
+        textAlign: TextAlign.center,
+      ),
+    ),
+    onTap: () {
+      Navigator.pushNamed(context, routeName);
+    },
+  );
 }

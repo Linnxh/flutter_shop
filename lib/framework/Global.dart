@@ -56,6 +56,7 @@ class Global {
 
     //初始化网络请求相关配置
     Git.init();
+    Git.customInit();
   }
 
 // // 持久化Profile信息

@@ -44,7 +44,10 @@ dependencies:
   provider: ^5.0.0
   fluttertoast: ^8.0.9
   pull_to_refresh: ^2.0.0
-
+  google_maps_flutter: ^2.2.6
+  http: ^0.13.6
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,6 +55,7 @@ dev_dependencies:
   #  build_runner: ^2.0.0
   json_serializable: ^6.3.1
   json_model: ^1.0.0
+  build_runner: ^2.3.3
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -65,7 +69,7 @@ flutter:
     - images/ic_mine_red.png
     - images/ic_sleep_blue.png
     - images/default.png
-    - images/
+    - assets/locations.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

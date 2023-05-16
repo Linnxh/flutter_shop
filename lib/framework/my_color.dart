@@ -12,4 +12,5 @@ class MyColor {
   static const Color C_ff9a12 = Color(0xFFFF9A12);
   static const Color C_06BA8A = Color(0xFF06BA8A);
   static const Color C_958C8D = Color(0xFF958C8D);
+  static const Color textGray4 = Color(0xFFAFA7A7);
 }

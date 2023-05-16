@@ -28,6 +28,18 @@ class Git {
       },
       contentType: "application/json"));
 
+  /// 代码中动态设置baseUrl
+  static Dio customDio = Dio(BaseOptions(
+      // baseUrl: 'https://pfgateway.transsion.com:9199',
+      // headers: {
+      //   "SYSTEM_TYPE": 1,
+      //   "COUNTRY_CODE": "UG",
+      //   "COUNTRY_ID": 1,
+      //   "Accept-Language": "en-US,en",
+      // },
+      // contentType: "application/json"
+      ));
+
   static void init() {
     // 网络请求拦截器
     dio.interceptors.add(Global.netInterceptor);
@@ -37,6 +49,25 @@ class Git {
     if (!Global.isRelease) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
+        client.findProxy = (uri) {
+          return 'PROXY 172.16.0.8:8888';
+        };
+        //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+      };
+    }
+  }
+
+  static void customInit() {
+    // 网络请求拦截器
+    customDio.interceptors.add(Global.netInterceptor);
+    // customDio.options.headers["Authorization"] =
+    //     "Bearer 7e44304d-ea63-4e02-ab65-b5ea863fce62";
+    // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
+    if (!Global.isRelease) {
+      (customDio.httpClientAdapter as DefaultHttpClientAdapter)
+          .onHttpClientCreate = (client) {
         client.findProxy = (uri) {
           return 'PROXY 172.16.0.8:8888';
         };
@@ -79,6 +110,19 @@ class Git {
         options: Options(
             // extra: {"isShowErrorToast": 1}
             ));
+
+    /// 设置附加参数，不显示toast，回掉中自行处理
+    return r.data;
+  }
+
+  /// 传音反地理编码
+  Future<List<dynamic>> getTransferGeocoding(String lat, String lng) async {
+    Map<String, dynamic> map = Map();
+    map["lat"] = lat;
+    map["lng"] = lng;
+    map["appKey"] = "Y0gQJ+Y6mBQ3WjXNYZF3ZQ==";
+    var r = await customDio.get("/data-bff/api/geo/reverseGeocode",
+        queryParameters: map, options: Options(extra: {"isShowErrorToast": 1}));
 
     /// 设置附加参数，不显示toast，回掉中自行处理
     return r.data;
